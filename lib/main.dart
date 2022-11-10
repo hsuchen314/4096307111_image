@@ -19,15 +19,10 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
 
-  final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
+  final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20),
   );
-  final ButtonStyle OutlinedButtonStyle = OutlinedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20)
-  );
-  final ButtonStyle TextButtonStyle = TextButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20)
-  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +46,27 @@ class HomePage extends StatelessWidget {
 
   ElevatedButton _elevatedButton(BuildContext context){
     return ElevatedButton(
-        child: Text('ElevatedButton'),
+        child:
+        Text('ElevatedButton'),
+        style: buttonStyle,
         onPressed: (){
           showSnackbar(context);
         }
     );
   }
   OutlinedButton _outlinedButton(){
-    return OutlinedButton(onPressed: (){}, child: Text('OutlinedButton'));
+    return OutlinedButton(
+      child: Text('OutlinedButton'),
+      style: buttonStyle,
+      onPressed: (){}
+    );
   }
   TextButton _TextButton(){
-    return TextButton(onPressed: (){}, child: Text('TextButton'));
+    return TextButton(
+        child: Text('TextButton'),
+        style: buttonStyle,
+        onPressed: (){}
+    );
   }
 
   void showSnackbar(BuildContext context){
