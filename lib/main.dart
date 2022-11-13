@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text('flutter_button'),
+            title: const Text('flutter_button'),
           ),
           body: HomePage(),
         ));
@@ -24,6 +24,13 @@ class HomePage extends StatelessWidget {
   );
 
 
+  var i=0;
+  var imageList = [
+    'assets/1.jpg',
+    'assets/2.jpg',
+    'assets/3.jpg',
+    'assets/4.jpg',
+  ];
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -31,48 +38,77 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: _elevatedButton(context),
+            child: buildInkWellContainer1(context),
           ),
           Container(
-            child: _outlinedButton(),
-          ),
-          Container(
-            child: _TextButton(),
-          ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Container(
+                  child: _elevatedButton2(context),
+                ),
+                Container(
+                  child: _elevatedButton1(context),
+                )
+              ],
+            )
+          )
         ],
       ),
     );
   }
 
-  ElevatedButton _elevatedButton(BuildContext context){
+
+  ElevatedButton _elevatedButton1(BuildContext context){
     return ElevatedButton(
-        child:
-        Text('ElevatedButton'),
         style: buttonStyle,
         onPressed: (){
-          showSnackbar(context);
-        }
+          if(i<3) {
+            imageList[i] = imageList[i + 1];
+          }else{
+            i=0;
+          }
+        },
+        child: const Text('next')
     );
   }
-  OutlinedButton _outlinedButton(){
-    return OutlinedButton(
-      child: Text('OutlinedButton'),
-      style: buttonStyle,
-      onPressed: (){}
-    );
-  }
-  TextButton _TextButton(){
-    return TextButton(
-        child: Text('TextButton'),
+  ElevatedButton _elevatedButton2(BuildContext context){
+    return ElevatedButton(
         style: buttonStyle,
-        onPressed: (){}
+        onPressed: (){
+          if(i>0) {
+            imageList[i] = imageList[i - 1];
+          }else {
+            i = 3;
+          }
+        },
+        child: const Text('last')
+    );
+  }
+  Widget buildInkWellContainer1(BuildContext context){
+    return Material(
+        child: Ink(
+            child: InkWell(
+              child: Container(
+                height: 600,
+                alignment: const Alignment(0,0),
+                child: Ink.image(
+                    image: AssetImage(imageList[i])
+                ),
+              ),
+              onTap: (){
+                showSnackbar(context);
+              },
+            )
+        )
     );
   }
 
+
   void showSnackbar(BuildContext context){
     final snackBar = SnackBar(
-      content: Text('Hi, I am SnackBar'),
-      duration: Duration(seconds: 3),
+      content: const Text('Hi, I am SnackBar'),
+      duration: const Duration(seconds: 3),
       backgroundColor: Colors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       action: SnackBarAction(
